@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.school.HotelSystem.system.dao.PermissionInfoMapper">
+  <resultMap id="BaseResultMap" type="com.school.HotelSystem.system.model.PermissionInfo">
+    <id column="permission_id" jdbcType="VARCHAR" property="permissionId" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="permission_type" jdbcType="VARCHAR" property="permissionType" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="available" jdbcType="CHAR" property="available" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    permission_id, permission_name, permission_type, parent_id, url, available
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from permission_info
+    where permission_id = #{permissionId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from permission_info
+    where permission_id = #{permissionId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.school.HotelSystem.system.model.PermissionInfo">
+    insert into permission_info (permission_id, permission_name, permission_type, 
+      parent_id, url, available
+      )
+    values (#{permissionId,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR}, #{permissionType,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{available,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.school.HotelSystem.system.model.PermissionInfo">
+    insert into permission_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        permission_id,
+      </if>
+      <if test="permissionName != null">
+        permission_name,
+      </if>
+      <if test="permissionType != null">
+        permission_type,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="available != null">
+        available,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        #{permissionId,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null">
+        #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null">
+        #{available,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.school.HotelSystem.system.model.PermissionInfo">
+    update permission_info
+    <set>
+      <if test="permissionName != null">
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null">
+        permission_type = #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null">
+        available = #{available,jdbcType=CHAR},
+      </if>
+    </set>
+    where permission_id = #{permissionId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.school.HotelSystem.system.model.PermissionInfo">
+    update permission_info
+    set permission_name = #{permissionName,jdbcType=VARCHAR},
+      permission_type = #{permissionType,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      available = #{available,jdbcType=CHAR}
+    where permission_id = #{permissionId,jdbcType=VARCHAR}
+  </update>
+  <!-- ######################################################################################## -->
+  
+  <select id="queryPermissionList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from permission_info
+  </select>
+  
+  <select id="queryPermissionListByType" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from permission_info
+    where permission_type = #{permissionType,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="querySelectPermissionByRole" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT
+			permission_info.permission_id,
+			permission_info.permission_name,
+			permission_info.permission_type,
+			permission_info.parent_id,
+			permission_info.available,
+			role_permission.permiss_id
+		FROM
+			role_info
+		INNER JOIN role_permission ON role_info.role_id =
+			role_permission.role_id
+		INNER JOIN permission_info ON role_permission.permiss_id =
+			permission_info.permission_id
+		where role_info.role_id=#{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="queryPermissionMenuListById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT
+			permission_info.permission_id,
+			permission_info.permission_name,
+			permission_info.permission_type,
+			permission_info.parent_id,
+			permission_info.url,
+			permission_info.available
+		FROM
+		shrio_user
+		INNER JOIN
+		user_role ON shrio_user.id = user_role.user_id
+		INNER JOIN role_info ON user_role.role_id = role_info.role_id
+		INNER JOIN role_permission ON role_info.role_id =
+		role_permission.role_id
+		INNER JOIN permission_info ON role_permission.permiss_id = permission_info.permission_id
+		WHERE
+		permission_type = 'menu'
+		AND shrio_user.id =
+		#{id,jdbcType=VARCHAR}
+	</select>
+	
+	
+	<select id="querypermissionMenuListByParentId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from permission_info
+		where parent_id = #{parentId,jdbcType=VARCHAR}
+	</select>
+	
+	
+</mapper>

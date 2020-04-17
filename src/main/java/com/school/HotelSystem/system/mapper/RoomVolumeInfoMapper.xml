@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.school.HotelSystem.system.dao.RoomVolumeInfoMapper">
+  <resultMap id="BaseResultMap" type="com.school.HotelSystem.system.model.RoomVolumeInfo">
+    <id column="room_type" jdbcType="VARCHAR" property="roomType" />
+    <result column="room_volume" jdbcType="BIGINT" property="roomVolume" />
+    <result column="room_in_volume" jdbcType="BIGINT" property="roomInVolume" />
+    <result column="room_book_volume" jdbcType="BIGINT" property="roomBookVolume" />
+    <result column="room_pice" jdbcType="DOUBLE" property="roomPice" />
+    <result column="room_picture" jdbcType="VARCHAR" property="roomPicture" />
+    <result column="room_intro" jdbcType="VARCHAR" property="roomIntro" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    room_type, room_volume, room_in_volume, room_book_volume, room_pice, room_picture, 
+    room_intro
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room_volume_info
+    where room_type = #{roomType,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from room_volume_info
+    where room_type = #{roomType,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.school.HotelSystem.system.model.RoomVolumeInfo">
+    insert into room_volume_info (room_type, room_volume, room_in_volume, 
+      room_book_volume, room_pice, room_picture, 
+      room_intro)
+    values (#{roomType,jdbcType=VARCHAR}, #{roomVolume,jdbcType=BIGINT}, #{roomInVolume,jdbcType=BIGINT}, 
+      #{roomBookVolume,jdbcType=BIGINT}, #{roomPice,jdbcType=DOUBLE}, #{roomPicture,jdbcType=VARCHAR}, 
+      #{roomIntro,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.school.HotelSystem.system.model.RoomVolumeInfo">
+    insert into room_volume_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roomType != null">
+        room_type,
+      </if>
+      <if test="roomVolume != null">
+        room_volume,
+      </if>
+      <if test="roomInVolume != null">
+        room_in_volume,
+      </if>
+      <if test="roomBookVolume != null">
+        room_book_volume,
+      </if>
+      <if test="roomPice != null">
+        room_pice,
+      </if>
+      <if test="roomPicture != null">
+        room_picture,
+      </if>
+      <if test="roomIntro != null">
+        room_intro,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roomType != null">
+        #{roomType,jdbcType=VARCHAR},
+      </if>
+      <if test="roomVolume != null">
+        #{roomVolume,jdbcType=BIGINT},
+      </if>
+      <if test="roomInVolume != null">
+        #{roomInVolume,jdbcType=BIGINT},
+      </if>
+      <if test="roomBookVolume != null">
+        #{roomBookVolume,jdbcType=BIGINT},
+      </if>
+      <if test="roomPice != null">
+        #{roomPice,jdbcType=DOUBLE},
+      </if>
+      <if test="roomPicture != null">
+        #{roomPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIntro != null">
+        #{roomIntro,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.school.HotelSystem.system.model.RoomVolumeInfo">
+    update room_volume_info
+    <set>
+      <if test="roomVolume != null">
+        room_volume = #{roomVolume,jdbcType=BIGINT},
+      </if>
+      <if test="roomInVolume != null">
+        room_in_volume = #{roomInVolume,jdbcType=BIGINT},
+      </if>
+      <if test="roomBookVolume != null">
+        room_book_volume = #{roomBookVolume,jdbcType=BIGINT},
+      </if>
+      <if test="roomPice != null">
+        room_pice = #{roomPice,jdbcType=DOUBLE},
+      </if>
+      <if test="roomPicture != null">
+        room_picture = #{roomPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIntro != null">
+        room_intro = #{roomIntro,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where room_type = #{roomType,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.school.HotelSystem.system.model.RoomVolumeInfo">
+    update room_volume_info
+    set room_volume = #{roomVolume,jdbcType=BIGINT},
+      room_in_volume = #{roomInVolume,jdbcType=BIGINT},
+      room_book_volume = #{roomBookVolume,jdbcType=BIGINT},
+      room_pice = #{roomPice,jdbcType=DOUBLE},
+      room_picture = #{roomPicture,jdbcType=VARCHAR},
+      room_intro = #{roomIntro,jdbcType=VARCHAR}
+    where room_type = #{roomType,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.school.HotelSystem.system.dao.TravellerInfoMapper">
+  <resultMap id="BaseResultMap" type="com.school.HotelSystem.system.model.TravellerInfo">
+    <id column="traveller_id" jdbcType="INTEGER" property="travellerId" />
+    <id column="room_no" jdbcType="INTEGER" property="roomNo" />
+    <result column="traveller_name" jdbcType="VARCHAR" property="travellerName" />
+    <result column="traveller_in_time" jdbcType="DATE" property="travellerInTime" />
+    <result column="traveller_out_time" jdbcType="DATE" property="travellerOutTime" />
+    <result column="traveller_jifen" jdbcType="INTEGER" property="travellerJifen" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    traveller_id, room_no, traveller_name, traveller_in_time, traveller_out_time, traveller_jifen
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.school.HotelSystem.system.model.TravellerInfoKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from traveller_info
+    where traveller_id = #{travellerId,jdbcType=INTEGER}
+      and room_no = #{roomNo,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.school.HotelSystem.system.model.TravellerInfoKey">
+    delete from traveller_info
+    where traveller_id = #{travellerId,jdbcType=INTEGER}
+      and room_no = #{roomNo,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.school.HotelSystem.system.model.TravellerInfo">
+    insert into traveller_info (traveller_id, room_no, traveller_name, 
+      traveller_in_time, traveller_out_time, traveller_jifen
+      )
+    values (#{travellerId,jdbcType=INTEGER}, #{roomNo,jdbcType=INTEGER}, #{travellerName,jdbcType=VARCHAR}, 
+      #{travellerInTime,jdbcType=DATE}, #{travellerOutTime,jdbcType=DATE}, #{travellerJifen,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.school.HotelSystem.system.model.TravellerInfo">
+    insert into traveller_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="travellerId != null">
+        traveller_id,
+      </if>
+      <if test="roomNo != null">
+        room_no,
+      </if>
+      <if test="travellerName != null">
+        traveller_name,
+      </if>
+      <if test="travellerInTime != null">
+        traveller_in_time,
+      </if>
+      <if test="travellerOutTime != null">
+        traveller_out_time,
+      </if>
+      <if test="travellerJifen != null">
+        traveller_jifen,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="travellerId != null">
+        #{travellerId,jdbcType=INTEGER},
+      </if>
+      <if test="roomNo != null">
+        #{roomNo,jdbcType=INTEGER},
+      </if>
+      <if test="travellerName != null">
+        #{travellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="travellerInTime != null">
+        #{travellerInTime,jdbcType=DATE},
+      </if>
+      <if test="travellerOutTime != null">
+        #{travellerOutTime,jdbcType=DATE},
+      </if>
+      <if test="travellerJifen != null">
+        #{travellerJifen,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.school.HotelSystem.system.model.TravellerInfo">
+    update traveller_info
+    <set>
+      <if test="travellerName != null">
+        traveller_name = #{travellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="travellerInTime != null">
+        traveller_in_time = #{travellerInTime,jdbcType=DATE},
+      </if>
+      <if test="travellerOutTime != null">
+        traveller_out_time = #{travellerOutTime,jdbcType=DATE},
+      </if>
+      <if test="travellerJifen != null">
+        traveller_jifen = #{travellerJifen,jdbcType=INTEGER},
+      </if>
+    </set>
+    where traveller_id = #{travellerId,jdbcType=INTEGER}
+      and room_no = #{roomNo,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.school.HotelSystem.system.model.TravellerInfo">
+    update traveller_info
+    set traveller_name = #{travellerName,jdbcType=VARCHAR},
+      traveller_in_time = #{travellerInTime,jdbcType=DATE},
+      traveller_out_time = #{travellerOutTime,jdbcType=DATE},
+      traveller_jifen = #{travellerJifen,jdbcType=INTEGER}
+    where traveller_id = #{travellerId,jdbcType=INTEGER}
+      and room_no = #{roomNo,jdbcType=INTEGER}
+  </update>
+  
+  <!-- ####################################################################################### -->
+  
+  <resultMap type="com.school.HotelSystem.system.model.TravellerInfo" id="ClassResultMap3">
+    <id property="travellerId" column="traveller_id"/>
+    		<result property="roomNo" column="room_no"/>
+            <result property="travellerName" column="traveller_name"/>
+            <result property="travellerInTime" column="traveller_in_time"/>
+            <result property="travellerOutTime" column="traveller_out_time"/>
+            <result property="travellerJifen" column="traveller_jifen"/>
+           
+        <association property="roomInfo" javaType="com.school.HotelSystem.system.model.RoomInfo">
+        	<id property="roomNo" column="room_no"/>
+        	<result property="roomType" column="room_type"/>
+        	<result property="roomCheckIn" column="room_check_in"/>
+        	<result property="roomTravellerId" column="room_traveller_id"/>
+        	<result property="userId" column="user_id"/>
+        </association>
+        <!-- ofType指定students集合中的对象类型 -->
+        <association property="roomVolumeInfo" javaType="com.school.HotelSystem.system.model.RoomVolumeInfo">
+            <id property="roomType" column="room_type"/>
+            <result property="roomVolume" column="room_volume"/>
+            <result property="roomInVolume" column="room_in_volume"/>
+            <result property="roomBookVolume" column="room_book_volume"/>
+            <result property="roomPice" column="room_pice"/>
+            <result property="roomPicture" column="room_picture"/>
+            <result property="roomIntro" column="room_intro"/>
+        </association>
+  	</resultMap>
+  <select id="queryTravelInfoList"  resultMap="ClassResultMap3">
+    SELECT * 
+	FROM traveller_info 
+	INNER JOIN room_info 
+	ON traveller_info.traveller_id=room_info.room_traveller_id 
+	INNER JOIN room_volume_info 
+	ON room_info.room_type=room_volume_info.room_type
+  </select>
+  
+  <select id="queryTravelInfoListBySome" parameterType="java.lang.String" resultMap="ClassResultMap3">
+   SELECT * 
+	FROM traveller_info 
+	INNER JOIN room_info 
+	ON traveller_info.traveller_id=room_info.room_traveller_id 
+	INNER JOIN room_volume_info 
+	ON room_info.room_type=room_volume_info.room_type
+    WHERE
+    		traveller_info.traveller_name Like #{0}
+            OR room_info.room_type LIKE #{1}
+            
+  </select>
+  
+</mapper>

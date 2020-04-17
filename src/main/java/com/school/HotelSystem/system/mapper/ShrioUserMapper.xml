@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.school.HotelSystem.system.dao.ShrioUserMapper">
+  <resultMap id="BaseResultMap" type="com.school.HotelSystem.system.model.ShrioUser">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="usercode" jdbcType="VARCHAR" property="usercode" />
+    <result column="usercard" jdbcType="VARCHAR" property="usercard" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="tell" jdbcType="VARCHAR" property="tell" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="locked" jdbcType="CHAR" property="locked" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, usercode, usercard, username, password, sex, tell, age, locked
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shrio_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from shrio_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.school.HotelSystem.system.model.ShrioUser">
+    insert into shrio_user (id, usercode, usercard, 
+      username, password, sex, 
+      tell, age, locked)
+    values (#{id,jdbcType=VARCHAR}, #{usercode,jdbcType=VARCHAR}, #{usercard,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{tell,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{locked,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.school.HotelSystem.system.model.ShrioUser">
+    insert into shrio_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="usercode != null">
+        usercode,
+      </if>
+      <if test="usercard != null">
+        usercard,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="tell != null">
+        tell,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="locked != null">
+        locked,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="usercode != null">
+        #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="usercard != null">
+        #{usercard,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="tell != null">
+        #{tell,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="locked != null">
+        #{locked,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.school.HotelSystem.system.model.ShrioUser">
+    update shrio_user
+    <set>
+      <if test="usercode != null">
+        usercode = #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="usercard != null">
+        usercard = #{usercard,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="tell != null">
+        tell = #{tell,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="locked != null">
+        locked = #{locked,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.school.HotelSystem.system.model.ShrioUser">
+    update shrio_user
+    set usercode = #{usercode,jdbcType=VARCHAR},
+      usercard = #{usercard,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      tell = #{tell,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      locked = #{locked,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- ############################################################################################ -->
+  
+   <select id="queryYuangongList" resultMap="ClassResultMap3">
+   SELECT * FROM shrio_user 
+    LEFT JOIN user_role ON shrio_user.id=user_role.user_id
+    LEFT JOIN  role_info ON user_role.role_id = role_info.role_id
+  </select>
+    <resultMap type="com.school.HotelSystem.system.model.ShrioUser" id="ClassResultMap3">
+    <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="usercode" column="usercode"/>
+            <result property="usercard" column="usercard"/>
+            <result property="password" column="password"/>
+            <result property="sex" column="sex"/>
+            <result property="age" column="age"/>
+            <result property="tell" column="tell"/>
+            <result property="locked" column="locked"/>
+        <association property="userRole" javaType="com.school.HotelSystem.system.model.UserRole">
+        	<id property="id" column="id"/>
+        	<result property="userId" column="user_id"/>
+        	<result property="roleId" column="role_id"/>
+        </association>
+        <!-- ofType指定students集合中的对象类型 -->
+        <association property="roleInfo" javaType="com.school.HotelSystem.system.model.RoleInfo">
+            <id property="roleId" column="role_id"/>
+            <result property="roleName" column="role_name"/>
+        </association>
+  	</resultMap>
+  
+  <select id="queryUser" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shrio_user
+    where usercode = #{usercode,jdbcType=VARCHAR} and password=#{password,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryUserByUserCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shrio_user
+    where usercode = #{usercode,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="searchCookie" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shrio_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryUserByAll" parameterType="java.lang.String" resultMap="ClassResultMap3">
+  SELECT * FROM shrio_user 
+    LEFT JOIN user_role ON shrio_user.id=user_role.user_id
+    LEFT JOIN  role_info ON user_role.role_id = role_info.role_id
+    WHERE
+            shrio_user.username LIKE #{0}
+            OR role_info.role_name LIKE #{1}
+  </select>
+  
+  
+</mapper>

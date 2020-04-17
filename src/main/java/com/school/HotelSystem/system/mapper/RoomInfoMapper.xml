@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.school.HotelSystem.system.dao.RoomInfoMapper">
+  <resultMap id="BaseResultMap" type="com.school.HotelSystem.system.model.RoomInfo">
+    <id column="room_no" jdbcType="INTEGER" property="roomNo" />
+    <result column="room_type" jdbcType="VARCHAR" property="roomType" />
+    <result column="room_check_in" jdbcType="CHAR" property="roomCheckIn" />
+    <result column="room_traveller_id" jdbcType="INTEGER" property="roomTravellerId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    room_no, room_type, room_check_in, room_traveller_id, user_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room_info
+    where room_no = #{roomNo,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from room_info
+    where room_no = #{roomNo,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.school.HotelSystem.system.model.RoomInfo">
+    insert into room_info (room_no, room_type, room_check_in, 
+      room_traveller_id, user_id)
+    values (#{roomNo,jdbcType=INTEGER}, #{roomType,jdbcType=VARCHAR}, #{roomCheckIn,jdbcType=CHAR}, 
+      #{roomTravellerId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.school.HotelSystem.system.model.RoomInfo">
+    insert into room_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roomNo != null">
+        room_no,
+      </if>
+      <if test="roomType != null">
+        room_type,
+      </if>
+      <if test="roomCheckIn != null">
+        room_check_in,
+      </if>
+      <if test="roomTravellerId != null">
+        room_traveller_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roomNo != null">
+        #{roomNo,jdbcType=INTEGER},
+      </if>
+      <if test="roomType != null">
+        #{roomType,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCheckIn != null">
+        #{roomCheckIn,jdbcType=CHAR},
+      </if>
+      <if test="roomTravellerId != null">
+        #{roomTravellerId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.school.HotelSystem.system.model.RoomInfo">
+    update room_info
+    <set>
+      <if test="roomType != null">
+        room_type = #{roomType,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCheckIn != null">
+        room_check_in = #{roomCheckIn,jdbcType=CHAR},
+      </if>
+      <if test="roomTravellerId != null">
+        room_traveller_id = #{roomTravellerId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where room_no = #{roomNo,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.school.HotelSystem.system.model.RoomInfo">
+    update room_info
+    set room_type = #{roomType,jdbcType=VARCHAR},
+      room_check_in = #{roomCheckIn,jdbcType=CHAR},
+      room_traveller_id = #{roomTravellerId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where room_no = #{roomNo,jdbcType=INTEGER}
+  </update>
+</mapper>

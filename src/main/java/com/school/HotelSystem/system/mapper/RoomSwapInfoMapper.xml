@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.school.HotelSystem.system.dao.RoomSwapInfoMapper">
+  <resultMap id="BaseResultMap" type="com.school.HotelSystem.system.model.RoomSwapInfo">
+    <id column="traveller_id" jdbcType="INTEGER" property="travellerId" />
+    <result column="traveller_name" jdbcType="VARCHAR" property="travellerName" />
+    <result column="room_no" jdbcType="INTEGER" property="roomNo" />
+    <result column="room_type" jdbcType="VARCHAR" property="roomType" />
+    <result column="room_add_pice" jdbcType="DOUBLE" property="roomAddPice" />
+    <result column="swap_time" jdbcType="DATE" property="swapTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    traveller_id, traveller_name, room_no, room_type, room_add_pice, swap_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room_swap_info
+    where traveller_id = #{travellerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from room_swap_info
+    where traveller_id = #{travellerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.school.HotelSystem.system.model.RoomSwapInfo">
+    insert into room_swap_info (traveller_id, traveller_name, room_no, 
+      room_type, room_add_pice, swap_time
+      )
+    values (#{travellerId,jdbcType=INTEGER}, #{travellerName,jdbcType=VARCHAR}, #{roomNo,jdbcType=INTEGER}, 
+      #{roomType,jdbcType=VARCHAR}, #{roomAddPice,jdbcType=DOUBLE}, #{swapTime,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.school.HotelSystem.system.model.RoomSwapInfo">
+    insert into room_swap_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="travellerId != null">
+        traveller_id,
+      </if>
+      <if test="travellerName != null">
+        traveller_name,
+      </if>
+      <if test="roomNo != null">
+        room_no,
+      </if>
+      <if test="roomType != null">
+        room_type,
+      </if>
+      <if test="roomAddPice != null">
+        room_add_pice,
+      </if>
+      <if test="swapTime != null">
+        swap_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="travellerId != null">
+        #{travellerId,jdbcType=INTEGER},
+      </if>
+      <if test="travellerName != null">
+        #{travellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNo != null">
+        #{roomNo,jdbcType=INTEGER},
+      </if>
+      <if test="roomType != null">
+        #{roomType,jdbcType=VARCHAR},
+      </if>
+      <if test="roomAddPice != null">
+        #{roomAddPice,jdbcType=DOUBLE},
+      </if>
+      <if test="swapTime != null">
+        #{swapTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.school.HotelSystem.system.model.RoomSwapInfo">
+    update room_swap_info
+    <set>
+      <if test="travellerName != null">
+        traveller_name = #{travellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNo != null">
+        room_no = #{roomNo,jdbcType=INTEGER},
+      </if>
+      <if test="roomType != null">
+        room_type = #{roomType,jdbcType=VARCHAR},
+      </if>
+      <if test="roomAddPice != null">
+        room_add_pice = #{roomAddPice,jdbcType=DOUBLE},
+      </if>
+      <if test="swapTime != null">
+        swap_time = #{swapTime,jdbcType=DATE},
+      </if>
+    </set>
+    where traveller_id = #{travellerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.school.HotelSystem.system.model.RoomSwapInfo">
+    update room_swap_info
+    set traveller_name = #{travellerName,jdbcType=VARCHAR},
+      room_no = #{roomNo,jdbcType=INTEGER},
+      room_type = #{roomType,jdbcType=VARCHAR},
+      room_add_pice = #{roomAddPice,jdbcType=DOUBLE},
+      swap_time = #{swapTime,jdbcType=DATE}
+    where traveller_id = #{travellerId,jdbcType=INTEGER}
+  </update>
+</mapper>

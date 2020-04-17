@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.school.HotelSystem.system.dao.BookInfoMapper">
+  <resultMap id="BaseResultMap" type="com.school.HotelSystem.system.model.BookInfo">
+    <id column="traveller_id" jdbcType="INTEGER" property="travellerId" />
+    <result column="traveller_name" jdbcType="VARCHAR" property="travellerName" />
+    <result column="room_type" jdbcType="VARCHAR" property="roomType" />
+    <result column="traveller_call" jdbcType="INTEGER" property="travellerCall" />
+    <result column="traveller_in_time" jdbcType="DATE" property="travellerInTime" />
+    <result column="traveller_out_time" jdbcType="DATE" property="travellerOutTime" />
+    <result column="traveller_jifen" jdbcType="INTEGER" property="travellerJifen" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    traveller_id, traveller_name, room_type, traveller_call, traveller_in_time, traveller_out_time, 
+    traveller_jifen
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from book_info
+    where traveller_id = #{travellerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from book_info
+    where traveller_id = #{travellerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.school.HotelSystem.system.model.BookInfo">
+    insert into book_info (traveller_id, traveller_name, room_type, 
+      traveller_call, traveller_in_time, traveller_out_time, 
+      traveller_jifen)
+    values (#{travellerId,jdbcType=INTEGER}, #{travellerName,jdbcType=VARCHAR}, #{roomType,jdbcType=VARCHAR}, 
+      #{travellerCall,jdbcType=INTEGER}, #{travellerInTime,jdbcType=DATE}, #{travellerOutTime,jdbcType=DATE}, 
+      #{travellerJifen,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.school.HotelSystem.system.model.BookInfo">
+    insert into book_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="travellerId != null">
+        traveller_id,
+      </if>
+      <if test="travellerName != null">
+        traveller_name,
+      </if>
+      <if test="roomType != null">
+        room_type,
+      </if>
+      <if test="travellerCall != null">
+        traveller_call,
+      </if>
+      <if test="travellerInTime != null">
+        traveller_in_time,
+      </if>
+      <if test="travellerOutTime != null">
+        traveller_out_time,
+      </if>
+      <if test="travellerJifen != null">
+        traveller_jifen,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="travellerId != null">
+        #{travellerId,jdbcType=INTEGER},
+      </if>
+      <if test="travellerName != null">
+        #{travellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomType != null">
+        #{roomType,jdbcType=VARCHAR},
+      </if>
+      <if test="travellerCall != null">
+        #{travellerCall,jdbcType=INTEGER},
+      </if>
+      <if test="travellerInTime != null">
+        #{travellerInTime,jdbcType=DATE},
+      </if>
+      <if test="travellerOutTime != null">
+        #{travellerOutTime,jdbcType=DATE},
+      </if>
+      <if test="travellerJifen != null">
+        #{travellerJifen,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.school.HotelSystem.system.model.BookInfo">
+    update book_info
+    <set>
+      <if test="travellerName != null">
+        traveller_name = #{travellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomType != null">
+        room_type = #{roomType,jdbcType=VARCHAR},
+      </if>
+      <if test="travellerCall != null">
+        traveller_call = #{travellerCall,jdbcType=INTEGER},
+      </if>
+      <if test="travellerInTime != null">
+        traveller_in_time = #{travellerInTime,jdbcType=DATE},
+      </if>
+      <if test="travellerOutTime != null">
+        traveller_out_time = #{travellerOutTime,jdbcType=DATE},
+      </if>
+      <if test="travellerJifen != null">
+        traveller_jifen = #{travellerJifen,jdbcType=INTEGER},
+      </if>
+    </set>
+    where traveller_id = #{travellerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.school.HotelSystem.system.model.BookInfo">
+    update book_info
+    set traveller_name = #{travellerName,jdbcType=VARCHAR},
+      room_type = #{roomType,jdbcType=VARCHAR},
+      traveller_call = #{travellerCall,jdbcType=INTEGER},
+      traveller_in_time = #{travellerInTime,jdbcType=DATE},
+      traveller_out_time = #{travellerOutTime,jdbcType=DATE},
+      traveller_jifen = #{travellerJifen,jdbcType=INTEGER}
+    where traveller_id = #{travellerId,jdbcType=INTEGER}
+  </update>
+</mapper>
